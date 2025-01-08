@@ -1,17 +1,17 @@
 import pandas as pd
 import os
 
-# Pfade zu den Ordnern
+# Path to the folders
 #path_ham = r"C:\Users\User\Documents\MCI\1_WS_24\Machine_Learing_2\Final_project\Spam-Filter\data\20021010_easy_ham\easy_ham"
 #path_spam = r"C:\Users\User\Documents\MCI\1_WS_24\Machine_Learing_2\Final_project\Spam-Filter\data\20021010_spam\spam"
 
-# Funktion zum Lesen der Dateien und Hinzufügen eines Labels
+# Function to read the files
 def read_files_from_folder(folder_path, label):
     data = []
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
 
-        # Nur Dateien öffnen
+        # Open only
         if os.path.isfile(file_path):
             try:
                 with open(file_path, "r", encoding="latin1") as file:
@@ -20,27 +20,27 @@ def read_files_from_folder(folder_path, label):
             except Exception as e:
                 print(f"Fehler beim Lesen der Datei {filename}: {e}")
     return data
-def get_dataframe(path_ham, path_spam):
 
-    # Daten aus beiden Ordnern lesen
-    ham_data = read_files_from_folder(path_ham, label=0)  # Ham = 0
-    spam_data = read_files_from_folder(path_spam, label=1)  # Spam = 1
 
-    # Kombiniere die Daten und erstelle einen DataFrame
-    dataset = ham_data + spam_data
+def get_dataframe_training(path, type):
+    
+    if type == 1 or "spam":
+        data = read_files_from_folder(path, label = 1)
+    elif type == 0 or "ham":
+        data = read_files_from_folder(path,label = 0)
+    else:
+        print("please enter a valid type, (spam or ham) or (1 0)")
+        
+    dataset = dataset.append(data)
     df = pd.DataFrame(dataset)
+    return df
 
-    # DataFrame anzeigen
-    print(df.head())
-    print(f"DataFrame enthält {df.shape[0]} Einträge.")
+def data_saving(df):
+    
+    user = input("do you want to save the dataframe? [y/n]")
 
-
-
-    data_saving = input("do you want to save the dataframe? [y/n]")
-
-    if data_saving=="y":
+    if user=="y":
         print("data was saved to spam_ham_dataset.csv")            
         df.to_csv("spam_ham_dataset.csv", index=False)
     else: 
         print("data wasn`t saved")
-

@@ -5,7 +5,7 @@ description = "final project machine learning creating a spam filter for e-mails
 authors = [
     {name = "FelixMahlknecht",email = "mf9512@mci4me.at"},
 ]
-dependencies = []
+dependencies = ["pandas>=2.2.3", "numpy<2", "scikit-learn>=1.6.0"]
 requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
